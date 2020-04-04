@@ -16,7 +16,13 @@
 
         <div class="product-info">
           <h1>{{ product }}</h1>
-          <p v-if="inStock">In Stock</p>
+          <p
+            v-if="inStock"
+            v-bind:disabled="!inStock"
+            v-bind:class="{ disabledButton: !inStock }"
+          >
+            In Stock
+          </p>
           <p v-else>Out of stock</p>
           <p v-if="onSale">On Sale!!!</p>
 
@@ -26,11 +32,13 @@
             </li>
           </ul>
 
-          <div v-for="variant in variants" :key="variant.variantId">
-            <p v-on:mouseover="updateProduct(variant.variantImage)">
-              {{ variant.variantColor }}
-            </p>
-          </div>
+          <div
+            v-for="variant in variants"
+            :key="variant.variantId"
+            class="color-box"
+            v-bind:style="{backgroundColor: variant.variantColor}"
+            v-on:mouseover="updateProduct(variant.variantImage)"
+          ></div>
 
           <button v-on:click="addToCart">Add to Cart</button>
 
@@ -48,7 +56,7 @@
         data: {
           product: "Socks",
           image: "./greenSocks.jpg",
-          inventory: true,
+          inStock: true,
           onSale: true,
           details: ["80% cotton", "20% polyester", "Gender-neutral"],
           variants: [
