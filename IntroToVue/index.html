@@ -15,7 +15,7 @@
         </div>
 
         <div class="product-info">
-          <h1>{{ product }}</h1>
+          <h1>{{ title }}</h1>
           <p
             v-if="inStock"
             v-bind:disabled="!inStock"
@@ -33,11 +33,11 @@
           </ul>
 
           <div
-            v-for="variant in variants"
+            v-for="variant, index in variants"
             :key="variant.variantId"
             class="color-box"
             v-bind:style="{backgroundColor: variant.variantColor}"
-            v-on:mouseover="updateProduct(variant.variantImage)"
+            v-on:mouseover="updateProduct(index)"
           ></div>
 
           <button v-on:click="addToCart">Add to Cart</button>
@@ -54,9 +54,9 @@
       var app = new Vue({
         el: "#app",
         data: {
+          brand: "Vue Mastery",
           product: "Socks",
-          image: "./greenSocks.jpg",
-          inStock: true,
+          selectedVariant: 0,
           onSale: true,
           details: ["80% cotton", "20% polyester", "Gender-neutral"],
           variants: [
@@ -77,8 +77,19 @@
           addToCart() {
             this.cart += 1;
           },
-          updateProduct(variantImage) {
-            this.image = variantImage;
+          updateProduct(index) {
+            this.selectedVariant = index;
+          },
+        },
+        computed: {
+          title() {
+            return this.brand + " " + this.product;
+          },
+          image() {
+            return this.variants[this.selectedVariant].variantImage;
+          },
+          inStock() {
+            return this.variants[this.selectedVariant].variantQuantity;
           },
         },
       });
