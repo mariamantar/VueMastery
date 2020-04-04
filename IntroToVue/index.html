@@ -15,6 +15,7 @@
       
         <div class="product-info">
           <h1>{{ product }}</h1>
+          <h2>{{ description }}</h2>
         </div>
       
       </div> 
@@ -24,7 +25,8 @@
         var app = new Vue({
         el: '#app',
         data: {
-        product: 'Socks'
+        product: 'Socks',
+        description: "socks come in all different styles and colors"
         } 
     })
   </script>
