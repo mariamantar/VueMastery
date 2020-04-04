@@ -9,7 +9,10 @@
     <div class="navbar"></div>
 
     <div id="app">
-      <product premium="premium"></product>
+      <div class="cart">
+        <p>Cart({{ cart.length }})</p>
+      </div>
+      <product premium="premium" @add-to-cart="updateCart"></product>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
@@ -56,9 +59,7 @@
 
           <button v-on:click="addToCart">Add to Cart</button>
 
-          <div class="cart">
-            <p>Cart({{ cart }})</p>
-          </div>
+
         </div>
       </div>
          `,
@@ -81,12 +82,14 @@
                 variantImage: "./bluesocks.jpg",
               },
             ],
-            cart: 0,
           };
         },
         methods: {
           addToCart() {
-            this.cart += 1;
+            this.$emit(
+              "add-to-cart",
+              this.variants[this.selectedVariant].variantId
+            );
           },
           updateProduct(index) {
             this.selectedVariant = index;
@@ -115,6 +118,12 @@
         el: "#app",
         data: {
           premium: false,
+          cart: [],
+        },
+        methods: {
+          updateCart(id) {
+            this.cart.push(id);
+          },
         },
       });
     </script>
