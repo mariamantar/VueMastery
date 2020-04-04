@@ -19,6 +19,17 @@
 
         <div class="product-info">
           <h1>{{ product }}</h1>
+          <p v-if="inStock">In Stock</p>
+          <p v-else>Out of stock</p>
+          <p v-if="onSale">On Sale!!!</p>
+
+
+         <ul>
+           <li v-for="detail in details">
+             {{ detail }}
+           </li>
+         </ul>
+
         </div>
 
 
@@ -32,7 +43,10 @@
         el: '#app',
         data: {
         product: 'Socks',
-        image: './greenSocks.jpg'
+        image: './greenSocks.jpg',
+        inventory: true,
+        onSale: true,
+        details: ["80% cotton", "20% polyester", "Gender-neutral"]
         } 
     })
   </script>
