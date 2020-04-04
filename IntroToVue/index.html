@@ -1,20 +1,17 @@
-
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>title</title>
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-
     <div class="navbar"></div>
 
     <div id="app">
-  
-    <div class="product">
+      <div class="product">
         <div class="product-image">
-          <img v-bind:src="image" alt="">
+          <img v-bind:src="image" alt="" />
         </div>
 
         <div class="product-info">
@@ -23,46 +20,60 @@
           <p v-else>Out of stock</p>
           <p v-if="onSale">On Sale!!!</p>
 
+          <ul>
+            <li v-for="detail in details">
+              {{ detail }}
+            </li>
+          </ul>
 
-         <ul>
-           <li v-for="detail in details">
-             {{ detail }}
-           </li>
-         </ul>
-
-         <div v-for="variant in variants" :key="variant.variantId">
+          <div v-for="variant in variants" :key="variant.variantId">
+            <p v-on:mouseover="updateProduct(variant.variantImage)">
               {{ variant.variantColor }}
-         </div>
+            </p>
+          </div>
 
+          <button v-on:click="addToCart">Add to Cart</button>
+
+          <div class="cart">
+            <p>Cart({{ cart }})</p>
+          </div>
         </div>
+      </div>
+    </div>
 
-
-        </div>
-      
-      </div> 
-
-      <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
-      <script>
-        var app = new Vue({
-        el: '#app',
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+    <script>
+      var app = new Vue({
+        el: "#app",
         data: {
-        product: 'Socks',
-        image: './greenSocks.jpg',
-        inventory: true,
-        onSale: true,
-        details: ["80% cotton", "20% polyester", "Gender-neutral"],
-        variants: [
-          {
-            variantId: 2234,
-            variantColor: "green"
+          product: "Socks",
+          image: "./greenSocks.jpg",
+          inventory: true,
+          onSale: true,
+          details: ["80% cotton", "20% polyester", "Gender-neutral"],
+          variants: [
+            {
+              variantId: 2234,
+              variantColor: "green",
+              variantImage: "./greenSocks.jpg",
+            },
+            {
+              variantId: 2235,
+              variantColor: "blue",
+              variantImage: "./bluesocks.jpg",
+            },
+          ],
+          cart: 0,
+        },
+        methods: {
+          addToCart() {
+            this.cart += 1;
           },
-          {
-            variantId: 2235,
-            variantColor: "blue"
-          }
-        ]
-        } 
-    })
-  </script>
+          updateProduct(variantImage) {
+            this.image = variantImage;
+          },
+        },
+      });
+    </script>
   </body>
 </html>
